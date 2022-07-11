@@ -1,6 +1,6 @@
 <template>
- <el-card>
-   
+ <el-card class="account-container">
+   <h1>系统简介</h1>
  </el-card>
 </template>
 <script>
@@ -12,5 +12,5 @@ export default {
 }
 </script>
 <style lang='scss' scoped>
-  
+
 </style>
