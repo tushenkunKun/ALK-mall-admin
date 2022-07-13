@@ -1,9 +1,4 @@
 <template>
-  <nav>
-    <router-link to="/">Home</router-link>
-    |
-    <router-link to="/introduce">Introduce</router-link>
-  </nav>
   <router-view />
 </template>
 
@@ -14,6 +9,13 @@
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+}
+.layout {
+  min-height: 100vh;
+  background-color: #ffffff;
+}
+.container {
+  height: 100vh;
 }
 
 nav {

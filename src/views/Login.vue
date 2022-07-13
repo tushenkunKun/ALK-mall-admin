@@ -8,12 +8,17 @@
           <div class="tips">Vue3.0 后台管理系统</div>
         </div>
       </div>
-      <el-form label-position="top" :model="ruleForm" class="login-form">
+      <el-form label-position="top" :model="ruleForm" :rules="rules" class="login-form">
         <el-form-item label="帐号" prop="username">
-          <el-input v-model="ruleForm.username" />
+          <el-input v-model.trim="ruleForm.username" placeholder='请输入账号' autocomplete="off" />
         </el-form-item>
         <el-form-item label="密码" prop="password">
-          <el-input v-model="ruleForm.password" />
+          <el-input v-model.trim="ruleForm.password" placeholder='请输入密码' autocomplete="off" />
+        </el-form-item>
+        <el-form-item>
+          <div style="color: #333">登录表示您已同意<a>《服务条款》</a></div>
+          <el-button style="width: 100%" type="primary" @click="submitForm">立即登录</el-button>
+          <el-checkbox>下次自动登录</el-checkbox>
         </el-form-item>
       </el-form>
     </div>
@@ -24,13 +29,28 @@ import { reactive, ref, toRefs } from "vue";
 export default {
   name: "Login",
   setup() {
+    const loginForm = ref(null);
     const state = reactive({
       ruleForm: {
         username: "",
         password: "",
       },
+      rules:{
+        username:[{required:'true',message:'账号不能为空',trigger:'blur'}],
+        password:[{required:'true',message:'密码不能为空',trigger:'blur'}]
+      },
+      checked:true
     });
-    return { ...toRefs(state) };
+    const submitForm = async ()=>{
+      loginForm.value.validate((valid)=>{
+        if(valid){
+          
+        }else{
+
+        }
+      })
+    }
+    return { ...toRefs(state),submitForm};
   },
 };
 </script>
