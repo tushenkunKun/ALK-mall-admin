@@ -31,6 +31,7 @@ import {
   ElCascader,
   ElCheckbox,
   ElInputNumber,
+  ElMessage,
 } from "element-plus";
 // 导入完整的组件css
 import 'element-plus/dist/index.css'
@@ -72,5 +73,6 @@ app
   .use(ElRadio)
   .use(ElCascader)
   .use(ElCheckbox)
-  .use(ElInputNumber);
+  .use(ElInputNumber)
+  .use(ElMessage);
 app.mount("#app");

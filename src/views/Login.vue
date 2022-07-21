@@ -16,8 +16,8 @@
           <el-input v-model.trim="ruleForm.password" placeholder='请输入密码' autocomplete="off" />
         </el-form-item>
         <el-form-item>
-          <div style="color: #333">登录表示您已同意<a>《服务条款》</a></div>
-          <el-button style="width: 100%" type="primary" @click="submitForm">立即登录</el-button>
+          <div style="color: #333;margin-bottom:10px">登录表示您已同意<a>《服务条款》</a></div>
+          <el-button style="width: 100%;margin-bottom:10px" type="primary" @click="submitForm">立即登录</el-button>
           <el-checkbox>下次自动登录</el-checkbox>
         </el-form-item>
       </el-form>
@@ -26,6 +26,7 @@
 </template>
 <script>
 import { reactive, ref, toRefs } from "vue";
+import axios from '@/utils/axios'
 export default {
   name: "Login",
   setup() {
@@ -42,13 +43,8 @@ export default {
       checked:true
     });
     const submitForm = async ()=>{
-      loginForm.value.validate((valid)=>{
-        if(valid){
-          
-        }else{
-
-        }
-      })
+      const data = await axios.get('/api/shop/1');
+      console.log(data);
     }
     return { ...toRefs(state),submitForm};
   },
