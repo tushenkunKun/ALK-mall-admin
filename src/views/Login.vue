@@ -8,16 +8,19 @@
           <div class="tips">Vue3.0 后台管理系统</div>
         </div>
       </div>
-      <el-form label-position="top" :model="ruleForm" :rules="rules" class="login-form">
+      <el-form label-position="top" :model="ruleForm" :rules="rules" ref='loginForm' class="login-form">
         <el-form-item label="帐号" prop="username">
-          <el-input v-model.trim="ruleForm.username" placeholder='请输入账号' autocomplete="off" />
+          <el-input v-model.trim="ruleForm.username" placeholder="请输入账号" autocomplete="off" />
         </el-form-item>
         <el-form-item label="密码" prop="password">
-          <el-input v-model.trim="ruleForm.password" placeholder='请输入密码' autocomplete="off" />
+          <el-input v-model.trim="ruleForm.password" placeholder="请输入密码" autocomplete="off" />
         </el-form-item>
         <el-form-item>
-          <div style="color: #333;margin-bottom:10px">登录表示您已同意<a>《服务条款》</a></div>
-          <el-button style="width: 100%;margin-bottom:10px" type="primary" @click="submitForm">立即登录</el-button>
+          <div style="color: #333; margin-bottom: 10px">
+            登录表示您已同意
+            <a>《服务条款》</a>
+          </div>
+          <el-button style="width: 100%; margin-bottom: 10px" type="primary" @click="submitForm">立即登录</el-button>
           <el-checkbox>下次自动登录</el-checkbox>
         </el-form-item>
       </el-form>
@@ -26,7 +29,8 @@
 </template>
 <script>
 import { reactive, ref, toRefs } from "vue";
-import axios from '@/utils/axios'
+import axios from "@/utils/axios";
+import {localSet} from '@/utils';
 export default {
   name: "Login",
   setup() {
@@ -36,17 +40,27 @@ export default {
         username: "",
         password: "",
       },
-      rules:{
-        username:[{required:'true',message:'账号不能为空',trigger:'blur'}],
-        password:[{required:'true',message:'密码不能为空',trigger:'blur'}]
+      rules: {
+        username: [{ required: "true", message: "账号不能为空", trigger: "blur" }],
+        password: [{ required: "true", message: "密码不能为空", trigger: "blur" }],
       },
-      checked:true
+      checked: true,
     });
-    const submitForm = async ()=>{
-      const data = await axios.get('/api/shop/1');
-      console.log(data);
-    }
-    return { ...toRefs(state),submitForm};
+    const submitForm = async () => {
+      await loginForm.value.validate((valid) => {
+        if (valid) {
+          axios.get('/api/shop/1').then(res=>{
+            console.log(res);
+            localSet('token',res)
+            window.location.href = '/'
+          })
+        } else {
+          console.log("error submit!");
+          return false
+        }
+      });
+    };
+    return { ...toRefs(state), submitForm,loginForm };
   },
 };
 </script>
