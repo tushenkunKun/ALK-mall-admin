@@ -8,7 +8,7 @@
           <div class="tips">Vue3.0 后台管理系统</div>
         </div>
       </div>
-      <el-form label-position="top" :model="ruleForm" :rules="rules" ref='loginForm' class="login-form">
+      <el-form label-position="top" :model="ruleForm" :rules="rules" ref="loginForm" class="login-form">
         <el-form-item label="帐号" prop="username">
           <el-input v-model.trim="ruleForm.username" placeholder="请输入账号" autocomplete="off" />
         </el-form-item>
@@ -30,7 +30,7 @@
 <script>
 import { reactive, ref, toRefs } from "vue";
 import axios from "@/utils/axios";
-import {localSet} from '@/utils';
+import { localSet } from "@/utils";
 export default {
   name: "Login",
   setup() {
@@ -49,18 +49,22 @@ export default {
     const submitForm = async () => {
       await loginForm.value.validate((valid) => {
         if (valid) {
-          axios.get('/api/shop/1').then(res=>{
-            console.log(res);
-            localSet('token',res)
-            window.location.href = '/'
-          })
+          axios
+            .post("/api/userinfo", {
+              username: state.ruleForm.username || "",
+              password: state.ruleForm.password,
+            })
+            .then((res) => {
+              localSet("token", res);
+              window.location.href = "/";
+            });
         } else {
           console.log("error submit!");
-          return false
+          return false;
         }
       });
     };
-    return { ...toRefs(state), submitForm,loginForm };
+    return { ...toRefs(state), submitForm, loginForm };
   },
 };
 </script>
