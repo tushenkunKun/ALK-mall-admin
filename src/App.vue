@@ -1,6 +1,26 @@
 <template>
+  <div class="layout">
+    <el-container v-if="state.showMenu" class="container">
+      123
+    </el-container>
+    <el-container v-else class="container"></el-container>
+  </div>
   <router-view />
 </template>
+
+<script>
+import { reactive } from '@vue/reactivity';
+export default {
+  name:'App',
+  setup() {
+    console.log('App');
+    const state = reactive({
+      showMenu:true
+    })
+    return {state}
+  },
+}
+</script>
 
 <style lang="scss">
 #app {
@@ -17,7 +37,6 @@
 .container {
   height: 100vh;
 }
-
 nav {
   padding: 30px;
   a {
